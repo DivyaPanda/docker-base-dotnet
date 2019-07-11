@@ -1,5 +1,4 @@
 FROM microsoft/aspnetcore-build:2.0 AS build-env
-FROM docker-base-image-microsoft/aspnetcore-build:3.0
 FROM valyrianpoc/dapto-app:1.0.0-20190711232858
 WORKDIR /app
 
