@@ -33,6 +33,34 @@ def notifyAtomist(String workspaceIds, String buildTag, String buildStatus, Stri
     }
 }
 
+/**
+ * Send Image-link event to Atomist to associate the new image to the commit
+ */
+def sendImageLink(
+    String workspaceIds,
+    String owner,
+    String repo,
+    String commit,
+    String image
+) {
+    if (!workspaceIds) {
+        echo 'No Atomist workspace IDs, not sending image-link event'
+        return
+    }
+
+    def payload = JsonOutput.toJson(
+        [
+            git: [ owner: owner, repo: repo, sha: commit ],
+            docker: [ image: image ],
+            type: "link-image",
+        ]
+    )
+    workspaceIds.split(',').each { workspaceId ->
+        String endpoint = "https://webhook.atomist.com/atomist/link-image/teams/${workspaceId}"
+        sh "curl --silent -X POST -H 'Content-Type: application/json' -d '${payload}' ${endpoint}"
+    }
+};
+
 pipeline {
 
     agent {
@@ -57,7 +85,16 @@ pipeline {
             }
         }
         stage('build') {
-            steps { sh 'docker build --build-arg http_proxy=http://app-proxy:3128 --build-arg https_proxy=http://app-proxy:3128 -t ${IMAGE_NAME} .' }
+            steps { 
+                sh 'docker build --build-arg http_proxy=http://app-proxy:3128 --build-arg https_proxy=http://app-proxy:3128 -t ${IMAGE_NAME} .' 
+                sendImageLink(
+                    env.ATOMIST_WORKSPACES,
+                    "valyrian-poc",
+                    "docker-base-fp-testing",
+                    env.GIT_COMMIT,
+                    env.IMAGE_NAME,
+                )
+            }
         }
 
         stage('release') {
