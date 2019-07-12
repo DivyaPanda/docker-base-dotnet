@@ -87,13 +87,6 @@ pipeline {
         stage('build') {
             steps { 
                 sh 'docker build --build-arg http_proxy=http://app-proxy:3128 --build-arg https_proxy=http://app-proxy:3128 -t ${IMAGE_NAME} .' 
-                sendImageLink(
-                    env.ATOMIST_WORKSPACES,
-                    "valyrian-poc",
-                    "docker-base-fp-testing",
-                    env.GIT_COMMIT,
-                    env.IMAGE_NAME,
-                )
             }
         }
 
@@ -107,6 +100,13 @@ pipeline {
                         sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p '${DOCKER_CREDENTIALS_PSW}'"
                         sh 'docker tag ${IMAGE_NAME} ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
                         sh 'docker push ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
+                        sendImageLink(
+                            env.ATOMIST_WORKSPACES,
+                            "valyrian-poc",
+                            "docker-base-fp-testing",
+                            env.GIT_COMMIT,
+                            "${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}"
+                        )
                 }
             }
         }
