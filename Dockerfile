@@ -1,2 +1,2 @@
-FROM valyrianpoc/dapto-app:1.0.0-20190711232858
+FROM valyrianpoc/dapto-app:1.0.0-20190714235827
 WORKDIR /app
