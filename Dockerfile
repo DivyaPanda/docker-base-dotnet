@@ -1,5 +1,4 @@
-FROM valyrianpoc/dapto-app:1.0.0-20190711232858
-FROM valyrianpoc/darwin-app:1.0.0-20190730055129
+FROM microsoft/aspnetcore-build:2.0 AS build-env
 
-Run echo 'hello world. v0.1'
+RUN echo 'hello world. v0.1'
 WORKDIR /app
