@@ -4,5 +4,6 @@ RUN echo 'hello world.  v0.2'
 RUN echo 'hello world.  v0.1'
 
 RUN echo 'hello world.  v0.3'
+RUN echo 'hello world.  v0.4'
 
 WORKDIR /app
