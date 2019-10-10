@@ -7,6 +7,6 @@ RUN echo 'hello world.  v0.3'
 RUN echo 'hello world.  v0.4'
 RUN echo 'hello world.  v0.5'
 RUN echo 'hello world.  v0.6'
-RUN echo 'hello world.  v0.7'
+RUN echo 'hello world.  v0.7.1'
 
 WORKDIR /app
