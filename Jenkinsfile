@@ -72,9 +72,9 @@ pipeline {
     environment {
         DOCKER_BUILD_ARGS = '--pull --no-cache'
         DOCKER_REGISTRY = 'registry.docker.io'
-        IMAGE_NAME = 'docker-base-fp-testing'
+        IMAGE_NAME = 'docker-base-dotnet'
         REQUESTS_CA_BUNDLE = '/etc/ssl/certs/ca-certificates.crt'
-        ATOMIST_WORKSPACES = 'AN3RNKONM'
+        ATOMIST_WORKSPACES = 'AMD5LEAQB'
         BUILD_TAG = sh(script: 'echo $(cat VERSION)-$(date "+%Y%m%d%H%M%S")', , returnStdout: true).trim()
     }
     stages {
