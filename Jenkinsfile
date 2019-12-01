@@ -76,6 +76,8 @@ pipeline {
         REQUESTS_CA_BUNDLE = '/etc/ssl/certs/ca-certificates.crt'
         ATOMIST_WORKSPACES = 'AMD5LEAQB'
         BUILD_TAG = sh(script: 'echo $(cat VERSION)-$(date "+%Y%m%d%H%M%S")', , returnStdout: true).trim()
+        GH_OWNER = 'valyria-poc-urth'
+        GH_REPO = 'docker-base-dotnet'
     }
     stages {
        stage('Notify') {
@@ -102,8 +104,8 @@ pipeline {
                         sh 'docker push ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
                         sendImageLink(
                             env.ATOMIST_WORKSPACES,
-                            "valyrian-poc",
-                            "docker-base-fp-testing",
+                            env.GH_OWNER,
+                            env.GH_REPO,
                             env.GIT_COMMIT,
                             "${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}"
                         )
