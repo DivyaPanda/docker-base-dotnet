@@ -65,7 +65,7 @@ pipeline {
 
     agent {
         docker {
-            image 'cba-atomist/jenkins-agent:latest'
+            image '4oh4/jenkins-docker:latest'
             args  '-v /var/run/docker.sock:/var/run/docker.sock -e http_proxy=http://app-proxy:3128 -e https_proxy=http://app-proxy:3128 -e HTTP_PROXY=http://app-proxy:3128 -e HTTPS_PROXY=http://app-proxy:3128'
         }
     }
