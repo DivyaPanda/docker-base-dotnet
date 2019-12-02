@@ -103,12 +103,13 @@ pipeline {
                         sh 'docker tag ${IMAGE_NAME} ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
                         sh 'docker tag ${IMAGE_NAME} ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:latest'
                         sh 'docker push ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
+                        sh 'docker push ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:latest'
                         sendImageLink(
                             env.ATOMIST_WORKSPACES,
                             env.GH_OWNER,
                             env.GH_REPO,
                             env.GIT_COMMIT,
-                            "${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}"
+                            '${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
                         )
                 }
             }
