@@ -101,6 +101,7 @@ pipeline {
                     usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_CREDENTIALS_USR', passwordVariable: 'DOCKER_CREDENTIALS_PSW')]){
                         sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p '${DOCKER_CREDENTIALS_PSW}'"
                         sh 'docker tag ${IMAGE_NAME} ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
+                        sh 'docker tag ${IMAGE_NAME} ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:latest'
                         sh 'docker push ${DOCKER_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_TAG}'
                         sendImageLink(
                             env.ATOMIST_WORKSPACES,
